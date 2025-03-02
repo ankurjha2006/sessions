@@ -1,6 +1,6 @@
 <?php include_once "../config/dbconnect.php";
 session_start();
-if(!isset($_SESSION['admin_username'])){
+if (!isset($_SESSION['admin_username'])) {
     echo "<script>window.location.href='setting.php';</script>";
 }
 ?>
@@ -12,6 +12,8 @@ if(!isset($_SESSION['admin_username'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kidz FunStation Settings</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <style>
         body {
             background-color: #f8f9fa;
@@ -71,81 +73,109 @@ if(!isset($_SESSION['admin_username'])){
                 <a href="manage_checkout.php">Manage Checkouts</a>
                 <a href="setting.php">Settings</a>
                 <a href="logout.php">Logout</a>
-                <p class="mt-5" style="font-size: 12px;">Powered by <strong>Comestro</strong></p>
+                <p class="mt-5" style="font-size: 12px; ">Powered by <strong>Comestro</strong></p>
             </div>
             <div class="col-md-10 content">
                 <h3>Kidz FunStation Settings</h3>
-                <div class="row g-3">
-                    <div class="col-md-4">
-                        <div class="settings-card p-3">
-                            <label>Hourly Charge</label>
+                <?php
+                $call_setting = mysqli_query($connect, "SELECT * FROM setting WHERE id=1");
+                $row = mysqli_fetch_assoc($call_setting);
 
-                            <input type="text" class="form-control border-0 shadow-none bg-transparent fs-4"
-                                value="₹500.00">
+                ?>
+                <form action="" method="post">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="settings-card p-3">
+                                <label>Hourly Charge</label>
 
+                                <input type="text" class="form-control border-0 shadow-none bg-transparent fs-4"
+                                    value="<?= $row['hourly_charge'] ?>" name="hourly_charge">
+
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="settings-card p-3">
-                            <label>Contact</label>
-                            <input type="text" class="form-control border-0 shadow-none bg-transparent fs-4"
-                                value="9608297530">
+                        <div class="col-md-4">
+                            <div class="settings-card p-3">
+                                <label>Contact</label>
+                                <input type="text" class="form-control border-0 shadow-none bg-transparent fs-4"
+                                    value="<?= $row['contact'] ?>" name="contact">
 
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="settings-card p-3">
-                            <label>Business Name</label>
-                            <input type="text" class="form-control border-0 shadow-none bg-transparent fs-4"
-                                value="Kidz FunStation">
+                        <div class="col-md-4">
+                            <div class="settings-card p-3">
+                                <label>Business Name</label>
+                                <input type="text" class="form-control border-0 shadow-none bg-transparent fs-4"
+                                    value="<?= $row['buisness_name'] ?>" name="buisness_name">
 
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="settings-card p-3">
-                            <label>Email</label>
-                            <input type="text" class="form-control border-0 shadow-none bg-transparent fs-4"
-                                value="kidzfunstation@gmail.com">
+                        <div class="col-md-4">
+                            <div class="settings-card p-3">
+                                <label>Email</label>
+                                <input type="text" class="form-control border-0 shadow-none bg-transparent fs-4"
+                                    value="<?= $row['email'] ?>" name="email">
 
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <form action="" method="post">
+                        <div class="col-md-4">
+                            <!-- <form action="" method="post"> -->
                             <div class="settings-card p-3">
                                 <label>Change Password</label>
                                 <br><br>
                                 <input type="password" class="form-control" placeholder="New password"
-                                    name="input_password"><br>
+                                    name="input_password" required><br>
+                                    
                             </div>
-                        </form>
-                        <?php
-                        if (isset($_POST['update_password'])) {
-                            $username = $_SESSION['username'];
-                            $input_password = sha1($_POST['input_password']);
-                            $update_password = mysqli_query($connect, "UPDATE admin SET password='$input_password' where username='$username'");
-                        }
+                            <?php
+                            if (isset($_POST['update_details'])) {
 
-                        ?>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="settings-card p-3">
-                            <label>GST (18%)</label>
-                            <input type="text" class="form-control border-0 shadow-none bg-transparent fs-4"
-                                value="10CNCPA1818RZ6">
+                                $username = $_SESSION['admin_username'];
+                                $input_password = sha1($_POST['input_password']);
+                                $update_password = mysqli_query($connect, "UPDATE super_admin SET password='$input_password' where admin_username='$username'");
+                            }
+
+                            ?>
+                            <!-- </form> -->
 
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="settings-card p-3">
-                            <label>Address</label>
-
-                            <textarea class="form-control border-0 shadow-none bg-transparent fs-5" rows="3"
-                                style="resize: none;">Panchsara Famethiswar, 1st Floor, Shop No 208, Near Tanishq Showroom, Line Bazar, Purnea (Bihar)</textarea>
-
-
+                        <div class="col-md-4">
+                            <div class="settings-card p-3">
+                                <label>GST (18%)</label>
+                                <input type="text" class="form-control border-0 shadow-none bg-transparent fs-4"
+                                    value="<?= $row['gst'] ?>" name="gst">
+                            </div>
                         </div>
+                        <div class="col-md-4">
+                            <div class="settings-card p-3">
+                                <label>Address</label>
+
+                                <textarea class="form-control border-0 shadow-none bg-transparent fs-5" rows="3"
+                                    style="resize: none;" name="address"><?= $row['address'] ?></textarea>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary fs-3" name="update_details">submit</button>
                     </div>
-                </div>
+                </form>
+                <?php
+                if (isset($_POST['update_details'])) {
+                    $hourly_charge = $_POST['hourly_charge'];
+                    $contact = $_POST['contact'];
+                    $buisness_name = $_POST['buisness_name'];
+                    $email = $_POST['email'];
+                    $gst = $_POST['gst'];
+                    $address = $_POST['address'];
+
+
+
+                    $update_details = mysqli_query($connect, "UPDATE setting SET hourly_charge='$hourly_charge', contact='$contact', buisness_name='$buisness_name', email='$email', gst='$gst', address='$address' WHERE id=1");
+
+                    if ($update_details) {
+                        echo "<script>window.location.href='setting.php';</script>";
+                    }
+
+                }
+
+                ?>
             </div>
         </div>
     </div>

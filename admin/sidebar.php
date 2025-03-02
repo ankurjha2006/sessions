@@ -1,8 +1,10 @@
 <?php include_once "../config/dbconnect.php";
 session_start();
-if(!isset($_SESSION['username'] ) || !isset($_SESSION['admin_username'])){
+if (!isset($_SESSION['username']) && !isset($_SESSION['admin_username'])) {
     echo "<script>window.location.href='login.php';</script>";
+    // exit; 
 }
+
 ?>
 
 <style>
@@ -42,10 +44,10 @@ if(!isset($_SESSION['username'] ) || !isset($_SESSION['admin_username'])){
 
 <div class="col-md-2 sidebar text-left">
     <a href="index.php" style="padding: 0;"><img src="../image/images.jpg" alt="Logo"></a>
-    <a href="index.php">Dashboard</a>
-    <a href="add_session.php">Add Session</a>
-    <a href="manage_checkout.php">Manage Checkouts</a>
-    <a href="setting.php">Settings</a>
-    <a href="logout.php">Logout</a>
+    <a href="index.php"><i class="bi bi-database-dash me-1"></i>Dashboard</a>
+    <a href="add_session.php"><i class="bi bi-person-plus-fill me-1"></i>Add Session</a>
+    <a href="manage_checkout.php"><i class="bi bi-journal-text me-1"></i>Manage Checkouts</a>
+    <a href="setting.php"><i class="bi bi-sliders me-1"></i>Settings</a>
+    <a href="logout.php"><i class="bi bi-box-arrow-right me-1"></i>Logout</a>
     <p class="mt-5" style="font-size: 12px;">Powered by <strong>Comestro</strong></p>
 </div>

@@ -26,9 +26,9 @@
 </head>
 <body>
     <div class="login-box text-center w-25">
-        <h2 class="mb-4">Login</h2>
+        <h2 class="mb-4">Staff Login</h2>
         <form method="post" >
-            <div class="mb-3">
+            <div class="mb-3 text-left">
                 <label class="form-label">Username</label>
                 <input type="text" class="form-control" name="username" placeholder="Enter username">
             </div>
@@ -39,6 +39,10 @@
                 </div>
             </div>
             <button type="submit" class="btn btn-primary w-100" name="login">Login</button>
+            <a href="super_admin_login.php" class="text-light   ">Super Admin Login</a>
+
+
+
         </form>
         <?php
         if(isset($_POST['login'])){

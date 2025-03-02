@@ -49,7 +49,8 @@
         <a class="navbar-brand" href="#">
             <img src="image/images.jpg" alt="Logo">
         </a>
-        <div class="dropdown me-5">
+        <a href="admin/login.php" class="btn btn-primary">Staff login</a>
+        <!-- <div class="dropdown me-5">
             <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 Login
@@ -60,7 +61,7 @@
                 <li class="p-1"><a class="dropdown-item bg-secondary text-light rounded p-2" href="admin/super_admin_login.php">Super Admin </a></li>
                 
             </ul>
-        </div>
+        </div> -->
         <!-- <a href="admin/index.php" class="btn btn-primary admin-btn">Admin Login</a> -->
     </nav>
 

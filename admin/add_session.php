@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kidz FunStation Settings</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <style>
         body {
             background-color: #f8f9fa;
@@ -37,7 +39,7 @@
             <div class="col-md-10 content">
                 <br><br>
                 <div class="form-container">
-                    
+
 
                     <h3 class="text-center text-primary mb-4">Kids Fun Session</h3>
                     <form method="post">
@@ -106,18 +108,26 @@
                         <button type="submit" name="session_submit" class="btn btn-primary w-100">Submit</button>
                     </form>
                     <?php
+                    $call_setting = mysqli_query($connect, "SELECT * FROM setting WHERE id=1");
+                    $row = mysqli_fetch_assoc($call_setting);
+                    $hour_cost = $row['hourly_charge'];
+
+
+                    ?>
+                    <?php
                     if (isset($_POST['session_submit'])) {
                         $session_time = $_POST['session_time'];
+                        $cost = $session_time * $hour_cost ;
                         $gst = isset($_POST['gst']) ? $_POST['gst'] : 0;
-                        if ($session_time == 0.5) {
-                            $cost = 300;
-                        } elseif ($session_time == 1) {
-                            $cost = 500;
-                        } elseif ($session_time == 1.5) {
-                            $cost = 700;
-                        } else {
-                            $cost = 850;
-                        }
+                        // if ($session_time == 0.5) {
+                        //     $cost = 300;
+                        // } elseif ($session_time == 1) {
+                        //     $cost = 500;
+                        // } elseif ($session_time == 1.5) {
+                        //     $cost = 700;
+                        // } else {
+                        //     $cost = 850;
+                        // }
                         $insert_session = mysqli_query($connect, "INSERT INTO session (kids_id,check_out_time,assigned_hours,total_cost,include_gst) VALUE ('$kids_id','0','$session_time','$cost','$gst')");
 
                         if ($insert_session) {

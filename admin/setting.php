@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kidz FunStation Settings</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <style>
         body {
             background-color: #f8f9fa;
@@ -31,29 +33,34 @@
             <?php include_once "sidebar.php" ?>
             <div class="col-md-10 content">
                 <h3>Kidz FunStation Settings</h3>
+                <?php
+                $call_setting = mysqli_query($connect, "SELECT * FROM setting WHERE id=1");
+                $row = mysqli_fetch_assoc($call_setting);
+
+                ?>
                 <div class="row g-3">
                     <div class="col-md-4">
                         <div class="settings-card p-3">
                             <label>Hourly Charge</label>
-                            <h5>₹500.00</h5>
+                            <h5>₹<?= $row['hourly_charge'] ?>.00</h5>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="settings-card p-3">
                             <label>Contact</label>
-                            <h5>9608297530</h5>
+                            <h5><?= $row['contact'] ?></h5>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="settings-card p-3">
                             <label>Business Name</label>
-                            <h5>Kidz FunStation</h5>
+                            <h5><?= $row['buisness_name'] ?></h5>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="settings-card p-3">
                             <label>Email</label>
-                            <h5>kidzfunstation@gmail.com</h5>
+                            <h5><?= $row['email'] ?></h5>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -70,22 +77,18 @@
                     <div class="col-md-4">
                         <div class="settings-card p-3">
                             <label>GST (18%)</label>
-                            <h5>10CNCPA1818RZ6</h5>
+                            <h5><?= $row['gst'] ?></h5>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="settings-card p-3">
                             <label>Address</label>
-                            <h5>Panchsara Famethiswar, 1st Floor, Shop No 208, Near Tanishq Showroom, Line Bazar, Purnea
-                                (Bihar)</h5>
+                            <h5><?= $row['address'] ?></h5>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="settings-card p-3 d-flex align-items-center ">
-                            <!-- <label>Address</label> -->
-                            <a href="super_admin_setting.php" class="btn btn-primary btn-lg">Update Details</a>
-                        </div>
-                    </div>
+                    
+                    <a href="super_admin_setting.php" class="btn btn-primary btn-lg">Update Details</a>
+
                 </div>
             </div>
         </div>
