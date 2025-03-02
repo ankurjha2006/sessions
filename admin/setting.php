@@ -12,11 +12,6 @@
         body {
             background-color: #f8f9fa;
         }
-
-
-
-
-
         .settings-card {
             background: white;
             padding: 15px;

@@ -30,7 +30,7 @@
                                 name="search_kids">Search</button>
                         </div>
                     </form>
-                    
+
 
                     <div class="dropdown">
                         <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -38,14 +38,15 @@
                             Select date
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="">Today</a></li>
-                            <li><a class="dropdown-item" href="">yesterday</a></li>
-                            <li><a class="dropdown-item" href="#">This Week</a></li>
-                            <li><a class="dropdown-item" href="#">This Month</a></li>
-                            <li><a class="dropdown-item" href="#">This Year</a></li>
+                            <li><a class="dropdown-item" href="?date=today">Today</a></li>
+                            <li><a class="dropdown-item" href="?date=yesterday">Yesterday</a></li>
+                            <li><a class="dropdown-item" href="?date=this_week">This Week</a></li>
+                            <li><a class="dropdown-item" href="?date=this_month">This Month</a></li>
+                            <li><a class="dropdown-item" href="?date=this_year">This Year</a></li>
                         </ul>
+
                     </div>
-                   
+
 
                 </div>
                 <table class="table table-striped">
@@ -65,6 +66,28 @@
                         if (isset($_GET['search_kids'])) {
                             $search_input = $_GET['search_input'];
                             $calling_session = mysqli_query($connect, "SELECT * FROM session JOIN kids ON session.kids_id = kids.id WHERE session.is_active=1 and kids_name LIKE '%$search_input%'");
+                        } elseif (isset($_GET['date'])) {
+                            $date_filter = "";
+
+                            $date = $_GET['date'];
+
+                            if ($date == "today") {
+                                $date_filter = " AND DATE(session.check_in_time) = CURDATE() ";
+                            } elseif ($date == "yesterday") {
+                                $date_filter = " AND DATE(session.check_in_time) = DATE_SUB(CURDATE(), INTERVAL 1 DAY) ";
+                            } elseif ($date == "this_week") {
+                                $date_filter = " AND YEARWEEK(session.check_in_time, 1) = YEARWEEK(CURDATE(), 1) ";
+                            } elseif ($date == "this_month") {
+                                $date_filter = " AND MONTH(session.check_in_time) = MONTH(CURDATE()) AND YEAR(session.check_in_time) = YEAR(CURDATE()) ";
+                            } elseif ($date == "this_year") {
+                                $date_filter = " AND YEAR(session.check_in_time) = YEAR(CURDATE()) ";
+                            }
+
+
+                            // Query with date filter
+                            $calling_session = mysqli_query($connect, "SELECT * FROM session 
+                                JOIN kids ON session.kids_id = kids.id 
+                                WHERE session.is_active=1 $date_filter");
                         } else {
                             $calling_session = mysqli_query($connect, "SELECT * FROM session JOIN kids ON session.kids_id = kids.id WHERE session.is_active=1");
                         }
